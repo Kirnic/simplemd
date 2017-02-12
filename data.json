@@ -1,0 +1,17 @@
+{
+    "categories": [
+        {
+            "title": "Категория 1", 
+            "counter": 5
+        }, {
+            "title": "Категория 2", 
+            "counter": 2
+        }, {
+            "title": "Категория 3", 
+            "counter": 4
+        }, {
+            "title": "Категория 4", 
+            "counter": 7
+        }
+    ]
+}

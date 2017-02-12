@@ -7,13 +7,10 @@
         <title>Просмотр товара</title>
 
         <style type="text/css">
-            /* все элементы VBox'a с шириной во всю строку */
             #myView2--idVBox > div {
                 width: 100%;
             }
         </style>
-
-        <!-- src="https://openui5.hana.ondemand.com/resources/sap-ui-core.js" -->
 
         <script
             id="sap-ui-bootstrap"
@@ -44,21 +41,53 @@
                         </Toolbar>
                     </subHeader>
                     <content>
-                        <List id="categoryList" noDataText="Нет данных">
+                        <List id="categoryList" noDataText="Нет данных" items="{/categories}">
                             <items>
-                                <StandardListItem type="Active" counter="5" title="Категория 1" press=".pressExample"/>
-                                <StandardListItem type="Active" counter="2" title="Категория 2" press=".pressExample"/>
-                                <StandardListItem type="Active" counter="4" title="Категория 3" press=".pressExample"/>
-                                <StandardListItem type="Active" counter="7" title="Категория 4" press=".pressExample"/>
+                                <StandardListItem type="Active" counter="{counter}" title="{title}" press=""/>
                             </items>
                         </List>
                     </content>
                     <footer>
                         <Toolbar>
+                            <ToolbarSpacer />
+                            <Button icon="sap-icon://add" press="onOpenDialog" />
                         </Toolbar>
                     </footer>
                 </Page>
             </mvc:View>
+        </script>
+
+        <script id="dialogFragment" type="ui5/fragment">
+            <core:FragmentDefinition
+                xmlns="sap.m"
+                xmlns:l="sap.ui.layout"
+                xmlns:f="sap.ui.layout.form"
+                xmlns:core="sap.ui.core" >
+                <Dialog
+                    title="Новая категория"
+                    >
+                    <content>
+                        <f:SimpleForm items="{/categories}">
+                            <f:content>
+                                <Label text="Название категории"/>
+                                <Input 
+                                    value="{/title}"
+                                    id="newCategoryName"/>
+                                <Label text="Количество"/>
+                                <Input
+                                    value="{/counter}" 
+                                    id="newCategoryCounter"/>
+                            </f:content>
+                        </f:SimpleForm>
+                    </content>
+                    <beginButton>
+                        <Button text="Создать" press="onAddCategory"/>
+                    </beginButton>
+                    <endButton>
+                        <Button text="Отмена" press="onCloseDialog"/>
+                    </endButton>
+                </Dialog>
+            </core:FragmentDefinition>
         </script>
 
         <!-- Детальная страница -->
@@ -184,16 +213,46 @@
             </mvc:View>
         </script>
 
-        <!-- Подключение страниц -->
         <script>
-            // Controller definition 4 Master
+            var oModel = new sap.ui.model.json.JSONModel("data.json");
+            sap.ui.getCore().setModel(oModel);
+
             sap.ui.controller("local.controller.Master", {
-                pressExample: function(oEvent) {
-                  alert('Нажат элемент '+oEvent.getSource().getTitle());
-                }
+                onOpenDialog: function() {
+                    if (!this._oDialog) {
+                        this._oDialog = sap.ui.xmlfragment({fragmentContent: jQuery('#dialogFragment').html()}, this);
+                        this.getView().addDependent(this._oDialog);
+                    }
+                    this._oDialog.open();
+                },
+
+                onCloseDialog: function() {
+                    this._oDialog.close();
+                },
+
+                onAddCategory: function() {
+                    var categoryName =  oModel.getProperty('/title');
+                    var categoryCounter = Number(oModel.getProperty('/counter'));
+                    
+                    if (categoryName && categoryCounter > 0) {
+                        this._save(categoryName, categoryCounter);
+                    } else {
+                        oModel.setProperty('/title', '');
+                        oModel.setProperty('/counter', undefined)
+                        sap.m.MessageToast.show("Некорректные данные. Попробуйте ещё раз");
+                    }
+                },
+
+                _save(name, counter) {
+                    var categories = oModel.getProperty('/categories');
+                    categories.push({
+                        "title": name,
+                        "counter": counter
+                    });
+                    this._oDialog.close();
+                }   
             });
 
-            // Controller definition 4 Detail
             sap.ui.controller("local.controller.Detail", {
 
             });
@@ -206,9 +265,7 @@
             var shell = sap.m.Shell({
                 showLogout:false,
                 app:splitApp
-            })
-
-            // oView.setModel(new sap.ui.model.json.JSONModel("https://openui5.hana.ondemand.com/test-resources/sap/ui/demokit/explored/products.json"));
+            });
 
             shell.placeAt('content');
         </script>
