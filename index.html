@@ -36,7 +36,11 @@
                     <subHeader>
                         <Toolbar id="searchBar" >
                             <content>
-                                <SearchField id="searchField" width="100%" placeholder="Поиск ..." showRefreshButton="true" />
+                                <SearchField id="searchField" 
+                                    width="100%" 
+                                    placeholder="Поиск ..." 
+                                    showRefreshButton="true" 
+                                    search="onSearch"/>
                             </content>
                         </Toolbar>
                     </subHeader>
@@ -227,6 +231,8 @@
                 },
 
                 onCloseDialog: function() {
+                    oModel.setProperty('/title', '');
+                    oModel.setProperty('/counter', undefined);
                     this._oDialog.close();
                 },
 
@@ -238,9 +244,21 @@
                         this._save(categoryName, categoryCounter);
                     } else {
                         oModel.setProperty('/title', '');
-                        oModel.setProperty('/counter', undefined)
+                        oModel.setProperty('/counter', undefined);
                         sap.m.MessageToast.show("Некорректные данные. Попробуйте ещё раз");
                     }
+                },
+
+                onSearch: function(oEvent) {
+                    var filters = [];
+                    var query = oEvent.getParameter('query');
+                    if (query) {
+                        var filtered = new sap.ui.model.Filter('title', sap.ui.model.FilterOperator.Contains, query);
+                        filters.push(filtered);
+                    }
+                    var categoryList = this.getView().byId('categoryList');
+                    var binding = categoryList.getBinding('items');
+                    binding.filter(filters); 
                 },
 
                 _save(name, counter) {
@@ -249,7 +267,7 @@
                         "title": name,
                         "counter": counter
                     });
-                    this._oDialog.close();
+                    this.onCloseDialog();
                 }   
             });
 
