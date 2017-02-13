@@ -1,0 +1,104 @@
+<mvc:View
+    controllerName="local.controller.Detail"
+    xmlns="sap.m"
+    xmlns:sap.ui.core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc" >
+    <Page id="page" navButtonPress="handleNavButtonPress" title="{Name}" showNavButton="{device>/isPhone}">
+        <content>
+            <ObjectHeader title="Laptop Case" number="{/summary}" numberUnit="EUR" introActive="false" titleActive="false" iconActive="false">
+                <attributes>
+                    <ObjectAttribute text="Red point stories" active="false" />
+                    <ObjectAttribute text="Laptop Case with many room for pencils and other stationaries" active="false" />
+                    <ObjectAttribute text="789g" active="false" />
+                </attributes>
+                <firstStatus>
+                    <ObjectStatus text="Доступен" state="Success" />
+                </firstStatus>
+            </ObjectHeader>
+            <VBox id="idVBox" direction="Column" alignItems="Center">
+                <items>
+                    <IconTabBar
+                        select="onSelectionTab"
+                        expanded="true"
+                        width="100%"
+                        id="idIconTabBar"
+                        class="sapUiResponsiveContentPadding">
+                        <items>
+                            <IconTabFilter
+                            icon="sap-icon://begin"
+                            iconColor="Positive"
+                            design="Horizontal"
+                            count="7 из 14"
+                            text="Confirm Ok"
+                            key="Ok" />
+                            <IconTabSeparator icon="sap-icon://open-command-field" />
+                            <IconTabFilter
+                            icon="sap-icon://compare"
+                            iconColor="Critical"
+                            design="Horizontal"
+                            count="5 из 14"
+                            text="Check Heavys"
+                            key="Heavy" />
+                            <IconTabSeparator icon="sap-icon://open-command-field" />
+                            <IconTabFilter
+                            icon="sap-icon://inventory"
+                            iconColor="Negative"
+                            design="Horizontal"
+                            count="2 из 14"
+                            text="Claim Overweights"
+                            key="Overweight" />
+                        </items>
+                        <content>
+                            <List 
+                                mode="MultiSelect"
+                                includeItemInSelection="true"
+                                select="OnSummarize"
+                                items="{
+                                    path: '/goods',
+                                    sorter : {
+                                        path : 'price' 
+                                    }
+                                }"
+                                noDataText="Нет товаров"
+                                id="goodsList"
+                                >
+                                <headerToolbar>
+                                    <Toolbar>
+                                    <Title text="Продукты" level="H2" />
+                                    <ToolbarSpacer />
+                                    <Button
+                                        icon="sap-icon://settings"
+                                        press="handleButtonPress" />
+                                    <Button
+                                        icon="sap-icon://person-placeholder"
+                                        press="handleButtonPress" />
+                                    <Button
+                                        icon="sap-icon://drop-down-list"
+                                        press="handleButtonPress" />
+                                    </Toolbar>
+                                </headerToolbar>
+                                <items>
+                                    <StandardListItem
+                                        title = "{title}"
+                                        description = "{description}"
+                                        icon = "{icon}"
+                                        iconDensityAware="false"
+                                        iconInset="false"
+                                        info = "{price} {currency}" />
+                                </items>
+                            </List>
+                        </content>
+                    </IconTabBar>
+                </items>
+            </VBox>
+        </content>
+        <footer>
+            <Toolbar>
+                <content>
+                    <ToolbarSpacer />
+                    <Button text="Добавить в корзину" icon="sap-icon://add" press="onAddToBucket"/>
+                </content>
+            </Toolbar>
+        </footer>
+    </Page>
+</mvc:View>

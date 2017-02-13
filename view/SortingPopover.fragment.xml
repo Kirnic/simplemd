@@ -1,0 +1,16 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core" >
+    <Popover
+        place="top"
+        title="Cортировать по"
+        contentWidth="250px"
+        >
+        <Toolbar>
+            <content>
+                <Button text="имени" width="50%" press="OnSortByName"/>
+                <Button text="количеству" width="50%" press="OnSortByCounter"/>
+            </content>
+        </Toolbar> 
+    </Popover>
+</core:FragmentDefinition>
