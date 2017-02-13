@@ -21,7 +21,7 @@
         <content>
             <List id="categoryList" noDataText="Нет данных" items="{/categories}">
                 <items>
-                    <StandardListItem type="Active" counter="{counter}" title="{title}" press=""/>
+                    <StandardListItem type="Active" counter="{counter}" title="{title}" press="onEditing"/>
                 </items>
             </List>
         </content>

@@ -4,28 +4,29 @@
     xmlns:f="sap.ui.layout.form"
     xmlns:core="sap.ui.core" >
     <Dialog
-        title="Новая категория"
-        id="createDialog"
+        title="Редактирование"
+        id="editDialogId"
         >
         <content>
             <f:SimpleForm>
                 <f:content>
                     <Label text="Название категории"/>
                     <Input 
-                        value="{/NewTitle}"
-                        id="newCategoryName"/>
+                        valueLiveUpdate="true"
+                        value="{/EditTitle}"
+                        id="EditCategoryName"/>
                     <Label text="Количество"/>
                     <Input
-                        value="{/NewCounter}" 
-                        id="newCategoryCounter"/>
+                        value="{/EditCounter}" 
+                        id="EditCategoryCounter"/>
                 </f:content>
             </f:SimpleForm>
         </content>
         <beginButton>
-            <Button text="Создать" press="onAddCategory"/>
+            <Button text="Создать" press="onConfirmEdit"/>
         </beginButton>
         <endButton>
-            <Button text="Отмена" press="onCloseDialog"/>
+            <Button text="Отмена" press="onCloseEditDialog"/>
         </endButton>
     </Dialog>
 </core:FragmentDefinition>

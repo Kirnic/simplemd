@@ -79,12 +79,12 @@
                                 </headerToolbar>
                                 <items>
                                     <StandardListItem
-                                        title = "{title}"
-                                        description = "{description}"
-                                        icon = "{icon}"
+                                        title="{title}"
+                                        description="{description}"
+                                        icon="{icon}"
                                         iconDensityAware="false"
                                         iconInset="false"
-                                        info = "{price} {currency}" />
+                                        info="{price} {currency}" />
                                 </items>
                             </List>
                         </content>
