@@ -54,7 +54,8 @@
                     <footer>
                         <Toolbar>
                             <ToolbarSpacer />
-                            <Button icon="sap-icon://add" press="onOpenDialog" />
+                            <Button text="Сортировать" icon="sap-icon://sort" press="onOpenPopover" />
+                            <Button text="Добавить категорию" icon="sap-icon://add" press="onOpenDialog" />
                         </Toolbar>
                     </footer>
                 </Page>
@@ -91,6 +92,25 @@
                         <Button text="Отмена" press="onCloseDialog"/>
                     </endButton>
                 </Dialog>
+            </core:FragmentDefinition>
+        </script>
+
+        <script id="popoverId" type="ui5/fragment">
+            <core:FragmentDefinition
+                xmlns="sap.m"
+                xmlns:core="sap.ui.core" >
+                <Popover
+                    place="top"
+                    title="Cортировать по"
+                    contentWidth="250px"
+                    >
+                    <Toolbar>
+                        <content>
+                            <Button text="имени" width="50%" press="OnSortByName"/>
+                            <Button text="количеству" width="50%" press="OnSortByCounter"/>
+                        </content>
+                    </Toolbar> 
+                </Popover>
             </core:FragmentDefinition>
         </script>
 
@@ -238,12 +258,36 @@
                     var filters = [];
                     var query = oEvent.getParameter('query');
                     if (query) {
-                        var filtered = new sap.ui.model.Filter('title', sap.ui.model.FilterOperator.Contains, query);
-                        filters.push(filtered);
+                        var sorter = new sap.ui.model.Filter('title', sap.ui.model.FilterOperator.Contains, query);
+                        filters.push(sorter);
                     }
                     var categoryList = this.getView().byId('categoryList');
                     var binding = categoryList.getBinding('items');
                     binding.filter(filters); 
+                },
+
+                onOpenPopover: function(oEvent) {
+                    if (!this._oPopover) {
+                        this._oPopover = sap.ui.xmlfragment({fragmentContent: jQuery('#popoverId').html()}, this);
+                        this._oPopover.setPlacement(sap.m.PlacementType.Top);
+                        this.getView().addDependent(this._oPopover);
+                    }
+                    var btn = oEvent.getSource();
+                    this._oPopover.openBy(btn);
+                },
+
+                OnSortByName: function() {
+                    var categoryList = this.getView().byId('categoryList');
+                    var sorter = new sap.ui.model.Sorter('title');
+                    var items = categoryList.getBinding('items').sort(sorter);
+                    this._oPopover.close();
+                }, 
+
+                OnSortByCounter: function() {
+                    var categoryList = this.getView().byId('categoryList');
+                    var sorter = new sap.ui.model.Sorter('counter');
+                    var items = categoryList.getBinding('items').sort(sorter);
+                    this._oPopover.close();
                 },
 
                 _save(name, counter) {
