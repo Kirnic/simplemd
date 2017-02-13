@@ -29,7 +29,7 @@
             <Toolbar>
                 <ToolbarSpacer />
                 <Button text="Сортировать" icon="sap-icon://sort" press="onOpenPopover" />
-                <Button text="Добавить категорию" icon="sap-icon://add" press="onOpenDialog" />
+                <Button text="Добавить" icon="sap-icon://add" press="onOpenDialog" />
             </Toolbar>
         </footer>
     </Page>
