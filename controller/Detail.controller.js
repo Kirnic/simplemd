@@ -40,7 +40,7 @@ sap.ui.define([
                 var price = context.getProperty('price');
                 sum += price;
             });
-            oModel.setProperty('/summary', sum);
+            this.getView().getModel().setProperty('/summary', sum);
         }
    });
 });

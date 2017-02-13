@@ -23,10 +23,10 @@
             </f:SimpleForm>
         </content>
         <beginButton>
-            <Button text="Создать" press="onConfirmEdit"/>
+            <Button text="Сохранить" press="onConfirmEdit" type="Accept"/>
         </beginButton>
         <endButton>
-            <Button text="Отмена" press="onCloseEditDialog"/>
+            <Button text="Отмена" press="onCloseEditDialog" type="Reject"/>
         </endButton>
     </Dialog>
 </core:FragmentDefinition>

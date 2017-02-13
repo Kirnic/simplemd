@@ -22,10 +22,10 @@
             </f:SimpleForm>
         </content>
         <beginButton>
-            <Button text="Создать" press="onAddCategory"/>
+            <Button text="Создать" press="onAddCategory" type="Accept"/>
         </beginButton>
         <endButton>
-            <Button text="Отмена" press="onCloseDialog"/>
+            <Button text="Отмена" press="onCloseDialog" type="Reject"/>
         </endButton>
     </Dialog>
 </core:FragmentDefinition>

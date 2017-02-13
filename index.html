@@ -22,20 +22,11 @@
         </script>
 
         <script>
-            var oModel = new sap.ui.model.json.JSONModel("data.json");
-            sap.ui.getCore().setModel(oModel);
-
-            var splitApp = new sap.m.SplitApp({
-                masterPages: [sap.ui.xmlview("myView1", {viewName: "local.view.Master"})],
-                detailPages: [sap.ui.xmlview("myView2", {viewName: "local.view.Detail"})]
-            });
-
-            var shell = sap.m.Shell({
-                showLogout:false,
-                app:splitApp
-            });
-
-            shell.placeAt('content');
+            new sap.m.Shell({
+				app : new sap.ui.core.ComponentContainer({
+					name: "local"
+				})
+			}).placeAt("content");	
         </script>
 
     </head>

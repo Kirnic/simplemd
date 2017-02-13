@@ -18,8 +18,8 @@ sap.ui.define([
         },
 
         onCloseDialog: function() {
-            oModel.setProperty('/NewTitle', '');
-            oModel.setProperty('/NewCounter', undefined);
+            this._oView.getModel().setProperty('/NewTitle', '');
+            this._oView.getModel().setProperty('/NewCounter', undefined);
             this._oDialog.close();
         },
 
@@ -31,27 +31,27 @@ sap.ui.define([
             var path = oEvent.getSource().getBindingContext().getPath();
             this._editedIndex = path.split('').pop();
 
-            oModel.setProperty('/EditTitle', oEvent.getSource().getTitle());
-            oModel.setProperty('/EditCounter', oEvent.getSource().getCounter());
+            this._oView.getModel().setProperty('/EditTitle', oEvent.getSource().getTitle());
+            this._oView.getModel().setProperty('/EditCounter', oEvent.getSource().getCounter());
 
             this._oEditDialog.open();
         },
 
         onCloseEditDialog: function(oEvent) {
-            oModel.setProperty('/EditTitle', '');
-            oModel.setProperty('/EditCounter', undefined);
+            this._oView.getModel().setProperty('/EditTitle', '');
+            this._oView.getModel().setProperty('/EditCounter', undefined);
             this._oEditDialog.close();
         },
 
         onConfirmEdit: function() {
-            var editedTitle = oModel.getProperty('/EditTitle');
-            var editedCounter = Number(oModel.getProperty('/EditCounter'));
+            var editedTitle = this._oView.getModel().getProperty('/EditTitle');
+            var editedCounter = Number(this._oView.getModel().getProperty('/EditCounter'));
 
             if (editedTitle) {
-                oModel.setProperty('/categories/' + this._editedIndex + '/title', editedTitle);
+                this._oView.getModel().setProperty('/categories/' + this._editedIndex + '/title', editedTitle);
             }
             if (editedCounter > 0) {
-                oModel.setProperty('/categories/' + this._editedIndex + '/counter', editedCounter);
+                this._oView.getModel().setProperty('/categories/' + this._editedIndex + '/counter', editedCounter);
                 this.onCloseEditDialog();
             } else {
                 MessageToast.show("Некорретное количество. Попробуйте ещё раз");
@@ -60,8 +60,8 @@ sap.ui.define([
         },
 
         onAddCategory: function() {
-            var categoryName =  oModel.getProperty('/NewTitle');
-            var categoryCounter = Number(oModel.getProperty('/NewCounter'));
+            var categoryName =  this._oView.getModel().getProperty('/NewTitle');
+            var categoryCounter = Number(this._oView.getModel().getProperty('/NewCounter'));
             
             if (categoryName && categoryCounter > 0) {
                 this._save(categoryName, categoryCounter);
@@ -107,7 +107,7 @@ sap.ui.define([
         },
 
         _save(name, counter) {
-            var categories = oModel.getProperty('/categories');
+            var categories = this._oView.getModel().getProperty('/categories');
             categories.push({
                 "title": name,
                 "counter": counter
