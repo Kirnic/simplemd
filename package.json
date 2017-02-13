@@ -1,0 +1,22 @@
+{
+  "name": "simplemd",
+  "version": "1.0.0",
+  "description": "simple sapui5 split App",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kirnic/simplemd.git"
+  },
+  "author": "kirnic",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kirnic/simplemd/issues"
+  },
+  "homepage": "https://github.com/Kirnic/simplemd#readme",
+  "devDependencies": {
+    "gulp-ui5-preload": "^1.3.0"
+  }
+}
