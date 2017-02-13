@@ -13,5 +13,32 @@
             "title": "Категория 4", 
             "counter": 7
         }
+    ],
+    "goods": [
+        {
+            "title": "Power Projector 4713",
+            "description": "1239102",
+            "icon": "https://sapui5.hana.ondemand.com/sdk/test-resources/sap/ui/demokit/explored/img/HT-6100.jpg",
+            "price": 100,
+            "currency": "EUR"
+        }, {
+            "title": "Gladiator MX",
+            "description": "2212-121-828",
+            "icon": "https://sapui5.hana.ondemand.com/sdk/test-resources/sap/ui/demokit/explored/img/HT-1071.jpg",
+            "price": 200,
+            "currency": "EUR"
+        }, {
+            "title": "Hurricane GX",
+            "description": "K47322.1",
+            "icon": "https://sapui5.hana.ondemand.com/sdk/test-resources/sap/ui/demokit/explored/img/HT-1072.jpg",
+            "price": 300,
+            "currency": "EUR"
+        }, {
+            "title": "Webcam",
+            "description": "22134T",
+            "icon": "https://sapui5.hana.ondemand.com/sdk/test-resources/sap/ui/demokit/explored/img/HT-1112.jpg",
+            "price": 400,
+            "currency": "EUR"
+        }
     ]
 }

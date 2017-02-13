@@ -116,6 +116,7 @@
                         <VBox id="idVBox" direction="Column" alignItems="Center">
                             <items>
                                 <IconTabBar
+                                    select="onSelectionTab"
                                     expanded="true"
                                     width="100%"
                                     id="idIconTabBar"
@@ -146,7 +147,16 @@
                                         key="Overweight" />
                                     </items>
                                     <content>
-                                        <List >
+                                        <List 
+                                            items="{
+                                                path: '/goods',
+                                                sorter : {
+                                                    path : 'price' 
+                                                }
+                                            }"
+                                            noDataText="Нет товаров"
+                                            id="goodsList"
+                                            >
                                             <headerToolbar>
                                               <Toolbar>
                                                 <Title text="Продукты" level="H2" />
@@ -171,39 +181,18 @@
                                             </infoToolbar>
                                             <items>
                                                 <StandardListItem
-                                                    title = "Power Projector 4713"
-                                                    description = "1239102"
-                                                    icon = "https://sapui5.hana.ondemand.com/sdk/test-resources/sap/ui/demokit/explored/img/HT-6100.jpg"
+                                                    title = "{title}"
+                                                    description = "{description}"
+                                                    icon = "{icon}"
                                                     iconDensityAware="false"
-                                                    iconInset="false" />
-
-                                                <StandardListItem
-                                                    title = "Gladiator MX"
-                                                    description = "2212-121-828"
-                                                    icon = "https://sapui5.hana.ondemand.com/sdk/test-resources/sap/ui/demokit/explored/img/HT-1071.jpg"
-                                                    iconDensityAware="false"
-                                                    iconInset="false" />
-
-                                                <StandardListItem
-                                                    title = "Hurricane GX"
-                                                    description = "K47322.1"
-                                                    icon = "https://sapui5.hana.ondemand.com/sdk/test-resources/sap/ui/demokit/explored/img/HT-1072.jpg"
-                                                    iconDensityAware="false"
-                                                    iconInset="false" />
-
-                                                <StandardListItem
-                                                    title = "Webcam"
-                                                    description = "22134T"
-                                                    icon = "https://sapui5.hana.ondemand.com/sdk/test-resources/sap/ui/demokit/explored/img/HT-1112.jpg"
-                                                    iconDensityAware="false"
-                                                    iconInset="false" />
+                                                    iconInset="false"
+                                                    info = "{price} {currency}" />
                                             </items>
                                         </List>
                                     </content>
                                 </IconTabBar>
                             </items>
                         </VBox>
-
                     </content>
                     <footer>
                         <Toolbar>
@@ -272,7 +261,21 @@
             });
 
             sap.ui.controller("local.controller.Detail", {
-
+                onSelectionTab: function(oEvent) {
+                    var categoryList = this.getView().byId('goodsList');
+                    var binding = categoryList.getBinding('items');
+                    var sorter = oEvent.getParameter('key');
+                    if (sorter === "Ok") {
+                        var filter = new sap.ui.model.Filter('price', 'LT', 150);
+                        binding.filter(filter);
+                    } else if (sorter === "Heavy") {
+                        var filter = new sap.ui.model.Filter('price', 'GT', 150);
+                        binding.filter(filter);
+                    } else if (sorter === "Overweight") {
+                        var filter = new sap.ui.model.Filter('price', 'GT', 350);
+                        binding.filter(filter);
+                    } 
+                }
             });
 
             var splitApp = new sap.m.SplitApp({
