@@ -200,7 +200,7 @@
                         <Toolbar>
                             <content>
                                 <ToolbarSpacer />
-                                <Button text="Добавить в корзину" icon="sap-icon://add" />
+                                <Button text="Добавить в корзину" icon="sap-icon://add" press="onAddToBucket"/>
                             </content>
                         </Toolbar>
                     </footer>
@@ -277,6 +277,18 @@
                         var filter = new sap.ui.model.Filter('price', 'GT', 350);
                         binding.filter(filter);
                     } 
+                },
+                onAddToBucket: function() {
+                    var categoryList = this.getView().byId('goodsList');
+                    var items = categoryList.getSelectedItems();
+                    var message = ""
+                    items.forEach(function(item) {
+                        var context =  item.getBindingContext();
+                        var productName = context.getProperty('title');
+                        message += productName + '\n';
+                    });
+                    message = message || "Ваша корзина пуста";
+                    sap.m.MessageToast.show(message);
                 }
             });
 
